@@ -7,9 +7,6 @@ const getYoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
 const youtube = require("./youtube.js");
 
-console.log("Récupération du fichier de configuration");
-var config = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'));
-
 const yt_api_key = process.env.yt_api_key;
 const bot_controller = process.env.bot_controller;
 const prefix = process.env.prefix;
