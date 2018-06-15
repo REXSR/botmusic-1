@@ -12,7 +12,7 @@ var config = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'));
 
 const yt_api_key = process.env.yt_api_key;
 const bot_controller = process.env.bot_controller;
-const prefix = process.env..prefix;
+const prefix = process.env.prefix;
 const discord_token = process.env.discord_token;
 const channel_id = process.env.channel_id;
 
