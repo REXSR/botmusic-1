@@ -63,8 +63,8 @@ client.on('message', function (message) {
               });
               youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
                 var date = new Date(null);	           
--               date.setSeconds(data.snippet.duration); // specify value for SECONDS here	
--               var result = date.toISOString().substr(11, 8);
+                date.setSeconds(data.snippet.duration); // specify value for SECONDS here	
+                var result = date.toISOString().substr(11, 8);
 				
 		message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
               });
@@ -104,8 +104,8 @@ client.on('message', function (message) {
               playMusic(queue[0], message);
               youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
                 var date = new Date(null);              
--               date.setSeconds(data.snippet.duration); // specify value for SECONDS here	
--               var result = date.toISOString().substr(11, 8);
+                date.setSeconds(data.snippet.duration); // specify value for SECONDS here	
+                var result = date.toISOString().substr(11, 8);
 				
 		message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
               });
