@@ -10,11 +10,11 @@ const youtube = require("./youtube.js");
 console.log("Récupération du fichier de configuration");
 var config = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'));
 
-const yt_api_key = config.yt_api_key;
-const bot_controller = config.bot_controller;
-const prefix = config.prefix;
-const discord_token = config.discord_token;
-const channel_id = config.channel_id;
+const yt_api_key = process.env.yt_api_key;
+const bot_controller = process.env.bot_controller;
+const prefix = process.env..prefix;
+const discord_token = process.env.discord_token;
+const channel_id = process.env.channel_id;
 
 var guilds = {};
 
