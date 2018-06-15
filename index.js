@@ -56,7 +56,7 @@ client.on('message', function (message) {
           });
         } else {
           youtube.getPlayListSongs(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(arr) {
-            if (id != -1){
+            if (arr != -1){
               arr.forEach(function(e) {
                 add_to_queue(e.snippet.resourceId.videoId);
                 queueName.push(e.snippet.title);
@@ -96,7 +96,7 @@ client.on('message', function (message) {
           });
         } else {
           youtube.getPlayListSongs(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(arr) {
-            if (id != -1){
+            if (arr != -1){
               arr.forEach(function(e) {
                 add_to_queue(e.snippet.resourceId.videoId);
                 queueNames.push(e.snippet.title);
