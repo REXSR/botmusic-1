@@ -295,10 +295,18 @@ function playMusic(id, message) {
         queue.shift();
         queueNames.shift();
         if (queue.length === 0) {
+          client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+          message.channel.send("Fin de la playlist.");
           queue = [];
           queueNames = [];
+          isPlaying = false;
+          dispatcher = null;
+          voiceChannel = null;
+          skipReq = 0;
+          skippers = [];
         } else {
           playMusic(queue[0], message);
+          message.channel.send(" la musique actuelle est : *" + queueNames[0] + "*");
         }
       });
     });
