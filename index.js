@@ -143,6 +143,7 @@ client.on('message', function (message) {
       emb.addField("" + (i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
     }
     message.reply({emb});
+    console.log({emb});
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
