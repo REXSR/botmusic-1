@@ -140,7 +140,8 @@ client.on('message', function (message) {
     const emb = new Discord.RichEmbed()
     .setTitle("Liste des musiques jouées");
     for (var i = 0; i < queueNames.length; i++) {
-      emb.addField("" + (i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
+      if(i === 0) emb.addField((i + 1) + queueNames[i] + " **(Musique actuelle)**");
+      else emb.addField((i + 1) + queueNames[i] + "");
     }
     message.reply({emb});
     console.log({emb});
