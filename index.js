@@ -139,12 +139,9 @@ client.on('message', function (message) {
   } else if (mess.startsWith(prefix + "queue")) {
     var emb = new Discord.RichEmbed()
     .setTitle("Liste des musiques jouées");
-    var ret = "```";
     for (var i = 0; i < queueNames.length; i++) {
-      emb.addField((i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
-      ret += (i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "") + "\n";
+      emb.addField("" + (i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
     }
-    ret += "```"
     message.reply({emb});
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
