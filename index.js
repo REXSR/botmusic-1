@@ -123,6 +123,7 @@ client.on('message', function (message) {
           skip_song();
           if(queueNames[0] == null){
             client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+            dispatcher.destroy();
             queue = [];
             queueNames = [];
             isPlaying = false;
@@ -148,6 +149,7 @@ client.on('message', function (message) {
         if(queueNames[0] == null){
           client.user.setActivity("Entrez " + prefix + "help pour l'aide");
           message.channel.send("Fin de la playlist.");
+          dispatcher.destroy();
           queue = [];
           queueNames = [];
           isPlaying = false;
@@ -181,6 +183,7 @@ client.on('message', function (message) {
         voiceChannel.leave();
         client.user.setActivity("Entrez " + prefix + "help pour l'aide");
         message.channel.send("Bye !");
+        dispatcher.destroy();
         queue = [];
         queueNames = [];
         isPlaying = false;
@@ -297,6 +300,7 @@ function playMusic(id, message) {
         if (queue.length === 0) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide");
           message.channel.send("Fin de la playlist.");
+          dispatcher.destroy();
           queue = [];
           queueNames = [];
           isPlaying = false;
