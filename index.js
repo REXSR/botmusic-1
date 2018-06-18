@@ -120,8 +120,17 @@ client.on('message', function (message) {
         if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
           message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
           skip_song();
-          if(isPlaying && queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
-          else  message.reply(" fin de la playlist.");
+          if(queueNames[0] == null){
+            client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+            message.channel.send("Fin de la playlist.");
+            queue = [];
+            queueNames = [];
+            isPlaying = false;
+            dispatcher = null;
+            voiceChannel = null;
+            skipReq = 0;
+            skippers = [];
+          } else message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
         } else {
           message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
         }
@@ -132,8 +141,17 @@ client.on('message', function (message) {
       try {
         message.reply(" passage à la musique suivante !");
         skip_song();
-        if(isPlaying && queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
-        else  message.reply(" fin de la playlist.");
+        if(queueNames[0] == null){
+          client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+          message.channel.send("Fin de la playlist.");
+          queue = [];
+          queueNames = [];
+          isPlaying = false;
+          dispatcher = null;
+          voiceChannel = null;
+          skipReq = 0;
+          skippers = [];
+        } else message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
       } catch (err) {
         console.log(err);
       }
@@ -145,7 +163,7 @@ client.on('message', function (message) {
         else emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "`\n\n");
       }
 
-      if(emb != "") message.reply(emb);
+      if(queueNames[0] != null) message.reply(emb);
       else message.reply("Aucune musique dans la playlist");
 
     } else if (mess.startsWith(prefix + "song")) {
@@ -248,17 +266,6 @@ client.on('ready', function () {
 
 function skip_song() {
   dispatcher.end();
-  if(queueNames[0] == null){
-    client.user.setActivity("Entrez " + prefix + "help pour l'aide");
-    message.channel.send("Fin de la playlist.");
-    queue = [];
-    queueNames = [];
-    isPlaying = false;
-    dispatcher = null;
-    voiceChannel = null;
-    skipReq = 0;
-    skippers = [];
-  }
 }
 
 function playMusic(id, message) {
