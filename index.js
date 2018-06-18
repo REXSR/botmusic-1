@@ -143,6 +143,7 @@ client.on('message', function (message) {
       if(i === 0) emb.addField((i + 1) + ": " + queueNames[i],"**(Musique actuelle)**");
       else emb.addField((i + 1) + ": " + queueNames[i]," ");
     }
+    console.log(emb.fields);
     message.channel.send(emb);
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
