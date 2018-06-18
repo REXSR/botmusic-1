@@ -137,12 +137,16 @@ client.on('message', function (message) {
       console.log(err);
     }
   } else if (mess.startsWith(prefix + "queue")) {
+    var emb = {embed: {
+      fieds:[]
+    }}
     var ret = "```";
     for (var i = 0; i < queueNames.length; i++) {
+      emb.embed.fields += {name:"(i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "")"};
       ret += (i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "") + "\n";
     }
     ret += "```"
-    message.reply(ret);
+    message.reply(emb);
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
