@@ -140,8 +140,8 @@ client.on('message', function (message) {
     var emb = "\n";
 
     for (var i = 0; i < queueNames.length; i++) {
-      if(i === 0) emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "**(Musique actuelle)**`\n");
-      else emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "`\n");
+      if(i === 0) emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "**(Musique actuelle)**`\n\n");
+      else emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "`\n\n");
     }
 
     if(emb != "") message.reply(emb);
