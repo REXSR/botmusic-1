@@ -119,7 +119,6 @@ client.on('message', function (message) {
         if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
           message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
           skip_song();
-          console.log(queue[1][0]);
           if(queue[1][0] == null){
             client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
             if(dispatcher != null)
@@ -145,7 +144,6 @@ client.on('message', function (message) {
       try {
         message.reply(" passage à la musique suivante !");
         skip_song();
-        console.log(queue[1][0]);
         if(queue[1][0] == null){
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
@@ -297,7 +295,8 @@ function playMusic(id, message) {
         skippers = [];
         queue[0].shift();
         queue[1].shift();
-        if (queue[0].length === 0) {
+        console.log(queue);
+        if (queue[0].length == 0) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
@@ -310,7 +309,7 @@ function playMusic(id, message) {
           skippers = [];
         } else {
           playMusic(queue[0][0], message);
-          message.channel.send(" passage à la musique : **" + queue[1][0] + "**.");
+          message.channel.send("Passage à la musique : **" + queue[1][0] + "**.");
         }
       });
     });
