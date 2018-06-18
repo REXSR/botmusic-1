@@ -114,6 +114,7 @@ client.on('message', function (message) {
         message.reply('Vous devez être présent dans un channel vocal !');
       }
     } else if (mess.startsWith(prefix + 'skip')) {
+      if(queueNames[0] != null){
       if (skippers.indexOf(message.author.id) == -1) {
         skippers.push(message.author.id);
         skipReq++;
@@ -122,7 +123,6 @@ client.on('message', function (message) {
           skip_song();
           if(queueNames[0] == null){
             client.user.setActivity("Entrez " + prefix + "help pour l'aide");
-            message.channel.send("Fin de la playlist.");
             queue = [];
             queueNames = [];
             isPlaying = false;
@@ -137,7 +137,11 @@ client.on('message', function (message) {
       } else {
         message.reply(" vous avez déjà voté !");
       }
+    } else {
+      message.reply(" playlist vide.");
+    }
     } else if (mess.startsWith(prefix + 'fskip') && member.roles.has(bot_controller)) {
+      if(queueNames[0] != null){
       try {
         message.reply(" passage à la musique suivante !");
         skip_song();
@@ -155,6 +159,9 @@ client.on('message', function (message) {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      message.reply(" playlist vide.");
+    }
     } else if (mess.startsWith(prefix + "queue")) {
       var emb = "\n";
 
