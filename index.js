@@ -57,7 +57,7 @@ client.on('message', function (message) {
             if (arr != -1){
               arr.forEach(function(e) {
                 add_to_queue(e.snippet.resourceId.videoId);
-                queueName.push(e.snippet.title);
+                queueNames.push(e.snippet.title);
               });
               youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
                 var date = new Date(null);
