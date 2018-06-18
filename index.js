@@ -174,17 +174,62 @@ client.on('message', function (message) {
       message.reply("Aucune musique en cours.");
     }
   } else if (mess.startsWith(prefix + 'help')) {
-    message.reply("```" +
-    "play : lance une musique et rejoins le channel vocal\n" +
-    "pause : mets en pause la musique actuelle\n" +
-    "resume : remets en route la musique actuelle\n" +
-    "queue : affiche la liste des musiques\n" +
-    "song : affiche la musique actuelle\n" +
-    "skip : lance un vote pour passer à la musique suivante\n" +
-    "fskip : force le passage à la musique suivante\n" +
-    "kill : déconnecte le bot du channel vocal\n" +
-    "```"
-  );
+    message.reply({embed: {
+			    color: 6560355,
+			    author: {
+			      name: bot.user.username,
+			      icon_url: bot.user.avatarURL
+			    },
+			    title: "Commande pour le bot musique",
+
+			    description: "Voici les commandes pour le bot",
+			    fields: [{
+				name: prefix + "play (URL/Nom de vidéo/Playlist)",
+				value: "lance une musique et rejoins le channel vocal"
+			      },
+			      {
+				name: prefix + "pause",
+				value: "mets en pause la musique actuelle (nécessite le role Dj)"
+			      },
+			      {
+				name: prefix + "resume",
+				value: "remets en route la musique actuelle (nécessite le role Dj)"
+			      },
+			      {
+				name: prefix + "queue",
+				value: "affiche la liste des musiques"
+			      },
+			      {
+				name: prefix + "song",
+				value: "affiche la musique actuelle"
+			      },
+			      {
+				name: prefix + "skip",
+				value: "lance un vote pour passer à la musique suivante"
+			      },
+
+			      {
+				name: prefix + "fskip",
+				value: "force le passage à la musique suivante (nécessite le role Dj)"
+			      },
+
+            {
+				name: prefix + "help",
+				value: "affiche cette liste"
+			      },
+
+			      {
+				name: prefix + "kill",
+				value: "déconnecte le bot du channel vocal"
+			      },
+			    ],
+			    timestamp: new Date(),
+			    footer: {
+			      icon_url: bot.user.avatarURL,
+			      text: "botMusicCalvin :3"
+			    }
+			  }
+			});
 }
 
 });
