@@ -102,7 +102,7 @@ client.on('message', function (message) {
               });
 
               playMusic(queue[0], message);
-              
+
             } else {
               message.reply("La requête n'a rien donné");
             }
@@ -119,7 +119,7 @@ client.on('message', function (message) {
       if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
         message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
         skip_song();
-        if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+        if(isPlaying || queueNames[0] == "undefined")  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
         else  message.reply(" fin de la playlist.");
       } else {
         message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
@@ -131,7 +131,7 @@ client.on('message', function (message) {
     try {
       message.reply(" passage à la musique suivante !");
       skip_song();
-      if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+      if(isPlaying || queueNames[0] == "undefined")  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
       else  message.reply(" fin de la playlist.");
     } catch (err) {
       console.log(err);
