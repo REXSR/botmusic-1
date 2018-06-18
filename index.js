@@ -122,8 +122,10 @@ client.on('message', function (message) {
       skippers.push(message.author.id);
       skipReq++;
       if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
-        skip_song();
         message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
+        skip_song();
+        if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+        else  message.reply(" fin de la playlist.");
       } else {
         message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
       }
@@ -132,7 +134,10 @@ client.on('message', function (message) {
     }
   } else if (mess.startsWith(prefix + 'fskip') && member.roles.has(bot_controller)) {
     try {
+      message.reply(" passage à la musique suivante !");
       skip_song();
+      if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+      else  message.reply(" fin de la playlist.");
     } catch (err) {
       console.log(err);
     }
@@ -210,6 +215,8 @@ function playMusic(id, message) {
       });
       skipReq = 0;
       skippers = [];
+
+      client.user.setGame((queueNames[0] || backQueue[currentBackQueue]));
 
       dispatcher = connection.playStream(stream);
       dispatcher.on('end', function() {
