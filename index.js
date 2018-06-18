@@ -21,7 +21,6 @@ var dispatcher = null;
 var voiceChannel = null;
 var skipReq = 0;
 var skippers = [];
-var currentBackQueue = 0;
 
 console.log("Connexion à l'API youtube")
 youtube.setApiKey(yt_api_key);
@@ -124,7 +123,7 @@ client.on('message', function (message) {
       if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
         message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
         skip_song();
-        if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+        if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
         else  message.reply(" fin de la playlist.");
       } else {
         message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
@@ -136,7 +135,7 @@ client.on('message', function (message) {
     try {
       message.reply(" passage à la musique suivante !");
       skip_song();
-      if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+      if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
       else  message.reply(" fin de la playlist.");
     } catch (err) {
       console.log(err);
@@ -149,7 +148,7 @@ client.on('message', function (message) {
     ret += "```"
     message.reply(ret);
   } else if (mess.startsWith(prefix + "song")) {
-    if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+    if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
   } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
     if(voiceChannel != null)
@@ -162,7 +161,6 @@ client.on('message', function (message) {
     voiceChannel = null;
     skipReq = 0;
     skippers = [];
-    currentBackQueue = 0;
     message.channel.send("Bye !");
 
   } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller)) {
@@ -216,7 +214,7 @@ function playMusic(id, message) {
       skipReq = 0;
       skippers = [];
 
-      client.user.setGame((queueNames[0] || backQueue[currentBackQueue]));
+      client.user.setGame((queueNames[0]));
 
       dispatcher = connection.playStream(stream);
       dispatcher.on('end', function() {
