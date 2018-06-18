@@ -248,6 +248,8 @@ client.on('ready', function () {
 
 function skip_song() {
   dispatcher.end();
+  if(queueNames[0] == "undefined")
+    client.user.setActivity("Entrez " + prefix + "help pour l'aide");
 }
 
 function playMusic(id, message) {
@@ -260,9 +262,8 @@ function playMusic(id, message) {
       });
       skipReq = 0;
       skippers = [];
-      if(queueNames[0] != "undefined")
+
       client.user.setActivity(queueNames[0]);
-      else client.user.setActivity("Entrez " + prefix + "help pour l'aide");
 
       dispatcher = connection.playStream(stream);
       dispatcher.on('end', function() {
