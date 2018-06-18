@@ -14,8 +14,9 @@ const prefix = process.env.prefix;
 const discord_token = process.env.discord_token;
 const channel_id = process.env.channel_id;
 
-var queue = [];
-var queueNames = [];
+var queue = [[],[]];
+var queueID = queue[0];
+var queueNames = queue[1];
 var isPlaying = false;
 var dispatcher = null;
 var voiceChannel = null;
@@ -34,11 +35,10 @@ client.on('message', function (message) {
   if(message.channel.id === channel_id){
     if (mess.startsWith(prefix + 'play')) {
       if (member.voiceChannel || voiceChannel != null) {
-        if (queue.length > 0 || isPlaying) {
+        if (queueID.length > 0 || isPlaying) {
           if (args.toLowerCase().indexOf("list=") === -1) {
             youtube.getID(args, function(id) {
               if (id != -1){
-                add_to_queue(id);
                 fetchVideoInfo(id, function(err, videoInfo) {
                   if (err) throw new Error(err);
                   var date = new Date(null);
@@ -74,7 +74,7 @@ client.on('message', function (message) {
             // console.log(args.toLowerCase().indexOf("list=") === -1);
             youtube.getID(args, function(id) {
               if (id != -1){
-                queue.push(id);
+                queueID.push(id);
                 fetchVideoInfo(id, function(err, videoInfo) {
                   if (err) throw new Error(err);
                   queueNames.push(videoInfo.title);
@@ -102,7 +102,7 @@ client.on('message', function (message) {
                   message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste, lecture de **" + queueNames[0] + "**.");
                 });
 
-                playMusic(queue[0], message);
+                playMusic(queueID[0], message);
 
               } else {
                 message.reply(" la requête n'a rien donné.");
@@ -125,8 +125,7 @@ client.on('message', function (message) {
             client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
             if(dispatcher != null)
               dispatcher.destroy();
-            queue = [];
-            queueNames = [];
+            queue = [[],[]];
             isPlaying = false;
             dispatcher = null;
             voiceChannel = null;
@@ -152,8 +151,7 @@ client.on('message', function (message) {
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
             dispatcher.destroy();
-          queue = [];
-          queueNames = [];
+          queue = [[],[]];
           isPlaying = false;
           dispatcher = null;
           voiceChannel = null;
@@ -187,8 +185,7 @@ client.on('message', function (message) {
         message.channel.send("Bye !");
         if(dispatcher != null)
           dispatcher.destroy();
-        queue = [];
-        queueNames = [];
+        queue = [[],[]];
         isPlaying = false;
         dispatcher = null;
         voiceChannel = null;
@@ -298,22 +295,21 @@ function playMusic(id, message) {
       dispatcher.on('end', function() {
         skipReq = 0;
         skippers = [];
-        queue.shift();
+        queueID.shift();
         queueNames.shift();
-        if (queue.length === 0) {
+        if (queueID.length === 0) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
             dispatcher.destroy();
-          queue = [];
-          queueNames = [];
+          queue = [[],[]];
           isPlaying = false;
           dispatcher = null;
           voiceChannel = null;
           skipReq = 0;
           skippers = [];
         } else {
-          playMusic(queue[0], message);
+          playMusic(queueID[0], message);
           message.channel.send(" passage à la musique : **" + queueNames[0] + "**.");
         }
       });
@@ -342,8 +338,8 @@ function shuffle(array) {
 
 function add_to_queue(strID) {
   if (youtube.isYoutube(strID)) {
-    queue.push(getYouTubeID(strID));
+    queueID.push(getYouTubeID(strID));
   } else {
-    queue.push(strID);
+    queueID.push(strID);
   }
 }
