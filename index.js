@@ -141,10 +141,9 @@ client.on('message', function (message) {
     .setTitle("Liste des musiques jouées");
     for (var i = 0; i < queueNames.length; i++) {
       if(i === 0) emb.addField((i + 1) + ": " + queueNames[i],"**(Musique actuelle)**");
-      else emb.addField((i + 1) + ": " + queueNames[i],"");
+      else emb.addField((i + 1) + ": " + queueNames[i]," ");
     }
-    message.channel.sendEmbed(emb);
-    console.log({emb});
+    message.channel.send(emb);
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
