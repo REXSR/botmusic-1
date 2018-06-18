@@ -137,12 +137,10 @@ client.on('message', function (message) {
       console.log(err);
     }
   } else if (mess.startsWith(prefix + "queue")) {
-    var emb = {embed: {
-      fieds:[]
-    }}
+    var emb = new Discord.RichEmbed();
     var ret = "```";
     for (var i = 0; i < queueNames.length; i++) {
-      emb.embed.fields += {name:(i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "")};
+      emb.addField((i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
       ret += (i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "") + "\n";
     }
     ret += "```"
