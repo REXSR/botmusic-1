@@ -60,11 +60,8 @@ client.on('message', function (message) {
                 queueNames.push(e.snippet.title);
               });
               youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
-                var date = new Date(null);
-                date.setSeconds(data.snippet.duration); // specify value for SECONDS here
-                var result = date.toISOString().substr(11, 8);
 
-                message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
+                message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste.");
               });
             } else {
               message.reply("La requête n'a rien donné");
@@ -78,7 +75,6 @@ client.on('message', function (message) {
           youtube.getID(args, function(id) {
             if (id != -1){
               queue.push(id);
-              playMusic(id, message);
               fetchVideoInfo(id, function(err, videoInfo) {
                 if (err) throw new Error(err);
                 queueNames.push(videoInfo.title);
@@ -88,6 +84,7 @@ client.on('message', function (message) {
 
                 message.reply(" lecture de **" + videoInfo.title + "** (" + result + ").");
               });
+              playMusic(id, message);
             } else {
               message.reply("La requête n'a rien donné");
             }
@@ -99,14 +96,13 @@ client.on('message', function (message) {
                 add_to_queue(e.snippet.resourceId.videoId);
                 queueNames.push(e.snippet.title);
               });
-              playMusic(queue[0], message);
-              youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
-                var date = new Date(null);
-                date.setSeconds(data.snippet.duration); // specify value for SECONDS here
-                var result = date.toISOString().substr(11, 8);
 
-                message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
+              youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
+                message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste.");
               });
+
+              playMusic(queue[0], message);
+              
             } else {
               message.reply("La requête n'a rien donné");
             }
@@ -214,7 +210,7 @@ function playMusic(id, message) {
       skipReq = 0;
       skippers = [];
 
-      client.user.setGame((queueNames[0]));
+      client.user.setActivity(queueNames[0]);
 
       dispatcher = connection.playStream(stream);
       dispatcher.on('end', function() {
