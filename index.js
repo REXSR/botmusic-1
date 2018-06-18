@@ -154,7 +154,7 @@ client.on('message', function (message) {
   } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
     if(voiceChannel != null){
       voiceChannel.leave();
-      client.user.setActivity("");
+      client.user.setActivity("Entrez " + prefix + "help pour l'aide");
       message.channel.send("Bye !");
       queue = [];
       queueNames = [];
@@ -243,6 +243,7 @@ client.on('message', function (message) {
 
 client.on('ready', function () {
   console.log('Bot prêt !');
+  client.user.setActivity("Entrez " + prefix + "help pour l'aide");
 });
 
 function skip_song() {
