@@ -137,14 +137,12 @@ client.on('message', function (message) {
       console.log(err);
     }
   } else if (mess.startsWith(prefix + "queue")) {
-    var emb = new Discord.RichEmbed()
-    .setTitle("Liste des musiques jouées :");
+    var emb = "";
     for (var i = 0; i < queueNames.length; i++) {
-      if(i === 0) emb.addField((i + 1) + ": " + queueNames[i],"**(Musique actuelle)**");
-      else emb.addField((i + 1) + ": " + queueNames[i]," ");
+      if(i === 0) emb += "__**" + ((i + 1) + ":**__ `" + queueNames[i],"**(Musique actuelle)**`\n");
+      else emb += "__**" + ((i + 1) + ":**__ `" + queueNames[i] + "`\n");
     }
-    console.log(emb.fields);
-    message.channel.send({emb});
+    message.channel.send(emb);
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
