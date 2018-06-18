@@ -175,12 +175,12 @@ client.on('message', function (message) {
     }
   } else if (mess.startsWith(prefix + 'help')) {
     message.reply({embed: {
-			    color: 6560355,
+			    color: 0xff0000,
 			    author: {
 			      name: client.user.username,
 			      icon_url: client.user.avatarURL
 			    },
-			    title: "Commande pour le bot musique",
+			    title: "Commandes pour le bot musique",
 
 			    description: "Voici les commandes pour le bot",
 			    fields: [{
