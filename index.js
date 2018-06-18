@@ -195,17 +195,19 @@ client.on('message', function (message) {
         skipReq = 0;
         skippers = [];
       }
-    } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller)) {
+    } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller) && isPlaying) {
       try {
         dispatcher.pause();
         message.reply("Mise en pause !");
+        isPlaying = false;
       } catch (error) {
         message.reply("Aucune musique en cours.");
       }
-    } else if (mess.startsWith(prefix + 'resume') && member.roles.has(bot_controller)) {
+    } else if (mess.startsWith(prefix + 'resume') && member.roles.has(bot_controller) && !isPlaying) {
       try {
         dispatcher.resume();
         message.reply("Lecture !");
+        isPlaying = false;
       } catch (error) {
         message.reply("Aucune musique en cours.");
       }
