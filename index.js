@@ -14,7 +14,7 @@ const prefix = process.env.prefix;
 const discord_token = process.env.discord_token;
 const channel_id = process.env.channel_id;
 
-var queue = new Array();
+var queue = new Array(new Array(),new Array());
 var isPlaying = false;
 var dispatcher = null;
 var voiceChannel = null;
@@ -123,7 +123,7 @@ client.on('message', function (message) {
             client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
             if(dispatcher != null)
               dispatcher.destroy();
-            queue = new Array();
+            queue = new Array(new Array(),new Array());
             isPlaying = false;
             dispatcher = null;
             voiceChannel = null;
@@ -183,7 +183,7 @@ client.on('message', function (message) {
         message.channel.send("Bye !");
         if(dispatcher != null)
           dispatcher.destroy();
-        queue = new Array();
+        queue = new Array(new Array(),new Array());
         isPlaying = false;
         dispatcher = null;
         voiceChannel = null;
@@ -300,7 +300,7 @@ function playMusic(id, message) {
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
             dispatcher.destroy();
-          queue = new Array();
+          queue = new Array(new Array(),new Array());
           isPlaying = false;
           dispatcher = null;
           voiceChannel = null;
