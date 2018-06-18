@@ -31,7 +31,7 @@ client.on('message', function (message) {
   const member = message.member;
   const mess = message.content.toLowerCase();
   const args = message.content.split(' ').slice(1).join(" ");
-  if(message.channel.id != channel_id){
+  if(message.channel.id === channel_id){
     if (mess.startsWith(prefix + 'play')) {
       if (member.voiceChannel || voiceChannel != null) {
         if (queue.length > 0 || isPlaying) {
@@ -242,8 +242,8 @@ client.on('message', function (message) {
 
 
 client.on('ready', function () {
-  console.log('Bot prêt !');
   client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+  console.log('Bot prêt !');
 });
 
 function skip_song() {
