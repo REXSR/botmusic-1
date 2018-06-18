@@ -153,6 +153,9 @@ client.on('message', function (message) {
     else  message.reply(" aucune musique en cours.");
   } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
     if(voiceChannel != null){
+      voiceChannel.leave();
+      client.user.setActivity("");
+      message.channel.send("Bye !");
       queue = [];
       queueNames = [];
       isPlaying = false;
@@ -160,10 +163,6 @@ client.on('message', function (message) {
       voiceChannel = null;
       skipReq = 0;
       skippers = [];
-      voiceChannel.leave();
-      client.user.setActivity("");
-      message.channel.send("Bye !");
-
     }
   } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller)) {
     try {
