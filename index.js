@@ -137,7 +137,7 @@ client.on('message', function (message) {
       console.log(err);
     }
   } else if (mess.startsWith(prefix + "queue")) {
-    var emb = "";
+    var emb = "\n";
 
     for (var i = 0; i < queueNames.length; i++) {
       if(i === 0) emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "**(Musique actuelle)**`\n");
