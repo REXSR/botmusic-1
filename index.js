@@ -177,8 +177,8 @@ client.on('message', function (message) {
     message.reply({embed: {
 			    color: 6560355,
 			    author: {
-			      name: bot.user.username,
-			      icon_url: bot.user.avatarURL
+			      name: client.user.username,
+			      icon_url: client.user.avatarURL
 			    },
 			    title: "Commande pour le bot musique",
 
@@ -225,7 +225,7 @@ client.on('message', function (message) {
 			    ],
 			    timestamp: new Date(),
 			    footer: {
-			      icon_url: bot.user.avatarURL,
+			      icon_url: client.user.avatarURL,
 			      text: "botMusicCalvin :3"
 			    }
 			  }
