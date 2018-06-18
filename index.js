@@ -83,8 +83,9 @@ client.on('message', function (message) {
                 var result = date.toISOString().substr(11, 8);
 
                 message.reply(" lecture de **" + videoInfo.title + "** (" + result + ").");
+                playMusic(id, message);
               });
-              playMusic(id, message);
+
             } else {
               message.reply("La requête n'a rien donné");
             }
@@ -179,61 +180,61 @@ client.on('message', function (message) {
     }
   } else if (mess.startsWith(prefix + 'help')) {
     message.reply({embed: {
-			    color: 0xff0000,
-			    author: {
-			      name: client.user.username,
-			      icon_url: client.user.avatarURL
-			    },
-			    title: "Commandes pour le bot musique",
+      color: 0xff0000,
+      author: {
+        name: client.user.username,
+        icon_url: client.user.avatarURL
+      },
+      title: "Commandes pour le bot musique",
 
-			    description: "Voici les commandes pour le bot",
-			    fields: [{
-				name: prefix + "play (URL/Nom de vidéo/Playlist)",
-				value: "lance une musique et rejoins le channel vocal"
-			      },
-			      {
-				name: prefix + "pause",
-				value: "mets en pause la musique actuelle (nécessite le role Dj)"
-			      },
-			      {
-				name: prefix + "resume",
-				value: "remets en route la musique actuelle (nécessite le role Dj)"
-			      },
-			      {
-				name: prefix + "queue",
-				value: "affiche la liste des musiques"
-			      },
-			      {
-				name: prefix + "song",
-				value: "affiche la musique actuelle"
-			      },
-			      {
-				name: prefix + "skip",
-				value: "lance un vote pour passer à la musique suivante"
-			      },
+      description: "Voici les commandes pour le bot",
+      fields: [{
+        name: prefix + "play (URL/Nom de vidéo/Playlist)",
+        value: "lance une musique et rejoins le channel vocal"
+      },
+      {
+        name: prefix + "pause",
+        value: "mets en pause la musique actuelle (nécessite le role Dj)"
+      },
+      {
+        name: prefix + "resume",
+        value: "remets en route la musique actuelle (nécessite le role Dj)"
+      },
+      {
+        name: prefix + "queue",
+        value: "affiche la liste des musiques"
+      },
+      {
+        name: prefix + "song",
+        value: "affiche la musique actuelle"
+      },
+      {
+        name: prefix + "skip",
+        value: "lance un vote pour passer à la musique suivante"
+      },
 
-			      {
-				name: prefix + "fskip",
-				value: "force le passage à la musique suivante (nécessite le role Dj)"
-			      },
+      {
+        name: prefix + "fskip",
+        value: "force le passage à la musique suivante (nécessite le role Dj)"
+      },
 
-            {
-				name: prefix + "help",
-				value: "affiche cette liste"
-			      },
+      {
+        name: prefix + "help",
+        value: "affiche cette liste"
+      },
 
-			      {
-				name: prefix + "kill",
-				value: "déconnecte le bot du channel vocal"
-			      },
-			    ],
-			    timestamp: new Date(),
-			    footer: {
-			      icon_url: client.user.avatarURL,
-			      text: "botMusicCalvin :3"
-			    }
-			  }
-			});
+      {
+        name: prefix + "kill",
+        value: "déconnecte le bot du channel vocal"
+      },
+    ],
+    timestamp: new Date(),
+    footer: {
+      icon_url: client.user.avatarURL,
+      text: "botMusicCalvin :3"
+    }
+  }
+});
 }
 
 });
