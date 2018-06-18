@@ -120,7 +120,7 @@ client.on('message', function (message) {
         if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
           message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
           skip_song();
-          if(isPlaying || queueNames[0] == null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+          if(isPlaying || queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
           else  message.reply(" fin de la playlist.");
         } else {
           message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
@@ -132,7 +132,7 @@ client.on('message', function (message) {
       try {
         message.reply(" passage à la musique suivante !");
         skip_song();
-        if(isPlaying || queueNames[0] == null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+        if(isPlaying || queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
         else  message.reply(" fin de la playlist.");
       } catch (err) {
         console.log(err);
@@ -149,7 +149,7 @@ client.on('message', function (message) {
       else message.reply("Aucune musique dans la playlist");
 
     } else if (mess.startsWith(prefix + "song")) {
-      if(isPlaying || queueNames[0] == null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+      if(isPlaying || queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
       else  message.reply(" aucune musique en cours.");
     } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
       if(voiceChannel != null){
