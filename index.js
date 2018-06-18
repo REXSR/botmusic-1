@@ -137,7 +137,7 @@ client.on('message', function (message) {
       console.log(err);
     }
   } else if (mess.startsWith(prefix + "queue")) {
-    var emb = new Discord.RichEmbed()
+    const emb = new Discord.RichEmbed()
     .setTitle("Liste des musiques jouées");
     for (var i = 0; i < queueNames.length; i++) {
       emb.addField("" + (i + 1),queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : ""));
