@@ -207,7 +207,7 @@ client.on('message', function (message) {
       try {
         dispatcher.resume();
         message.reply("Lecture !");
-        isPlaying = false;
+        isPlaying = true;
       } catch (error) {
         message.reply("Aucune musique en cours.");
       }
