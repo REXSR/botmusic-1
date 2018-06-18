@@ -119,6 +119,7 @@ client.on('message', function (message) {
         if (skipReq >= Math.ceil((voiceChannel.members.size - 1) / 2)) {
           message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
           skip_song();
+          console.log(queue[1][0]);
           if(queue[1][0] == null){
             client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
             if(dispatcher != null)
@@ -144,6 +145,7 @@ client.on('message', function (message) {
       try {
         message.reply(" passage à la musique suivante !");
         skip_song();
+        console.log(queue[1][0]);
         if(queue[1][0] == null){
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
