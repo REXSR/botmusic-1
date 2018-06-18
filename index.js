@@ -49,7 +49,7 @@ client.on('message', function (message) {
                   queueNames.push(videoInfo.title);
                 });
               } else {
-                message.reply("La requête n'a rien donné");
+                message.reply(" la requête n'a rien donné.");
               }
             });
           } else {
@@ -64,7 +64,7 @@ client.on('message', function (message) {
                   message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste.");
                 });
               } else {
-                message.reply("La requête n'a rien donné");
+                message.reply(" la requête n'a rien donné.");
               }
             });
           }
@@ -87,7 +87,7 @@ client.on('message', function (message) {
                 });
 
               } else {
-                message.reply("La requête n'a rien donné");
+                message.reply(" la requête n'a rien donné");
               }
             });
           } else {
@@ -99,19 +99,19 @@ client.on('message', function (message) {
                 });
 
                 youtube.getPlayListMetaData(args.match(/list=(.*)/)[args.match(/list=(.*)/).length - 1], 50, function(data) {
-                  message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste.");
+                  message.reply(" playlist **" + data.snippet.title + "** ajouté à la liste, lecture de **" + queueNames[0] "**.");
                 });
 
                 playMusic(queue[0], message);
 
               } else {
-                message.reply("La requête n'a rien donné");
+                message.reply(" la requête n'a rien donné.");
               }
             });
           }
         }
       } else {
-        message.reply('Vous devez être présent dans un channel vocal !');
+        message.reply(' vous devez être présent dans un channel vocal !');
       }
     } else if (mess.startsWith(prefix + 'skip')) {
       if(queueNames[0] != null){
@@ -122,7 +122,7 @@ client.on('message', function (message) {
           message.reply(" votre vote a bien été pris en compte. Passage à la musique suivante !");
           skip_song();
           if(queueNames[0] == null){
-            client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+            client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
             dispatcher.destroy();
             queue = [];
             queueNames = [];
@@ -131,7 +131,7 @@ client.on('message', function (message) {
             voiceChannel = null;
             skipReq = 0;
             skippers = [];
-          } else message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+          } else message.reply(" la musique actuelle est : **" + queueNames[0] + "**.");
         } else {
           message.reply(" votre vote a bien été pris en compte. Encore **" + ((Math.ceil((voiceChannel.members.size - 1) / 2)) - skipReq) + "** votes pour passer à la musique suivante.");
         }
@@ -139,7 +139,7 @@ client.on('message', function (message) {
         message.reply(" vous avez déjà voté !");
       }
     } else {
-      message.reply(" playlist vide.");
+      message.reply(" la playlist est vide.");
     }
     } else if (mess.startsWith(prefix + 'fskip') && member.roles.has(bot_controller)) {
       if(queueNames[0] != null){
@@ -147,7 +147,7 @@ client.on('message', function (message) {
         message.reply(" passage à la musique suivante !");
         skip_song();
         if(queueNames[0] == null){
-          client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+          client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
           dispatcher.destroy();
           queue = [];
@@ -157,12 +157,12 @@ client.on('message', function (message) {
           voiceChannel = null;
           skipReq = 0;
           skippers = [];
-        } else message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+        } else message.reply(" la musique actuelle est : **" + queueNames[0] + "**.");
       } catch (err) {
         console.log(err);
       }
     } else {
-      message.reply(" playlist vide.");
+      message.reply(" la playlist est vide.");
     }
     } else if (mess.startsWith(prefix + "queue")) {
       var emb = "\n";
@@ -181,7 +181,7 @@ client.on('message', function (message) {
     } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
       if(voiceChannel != null){
         voiceChannel.leave();
-        client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+        client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
         message.channel.send("Bye !");
         dispatcher.destroy();
         queue = [];
@@ -213,47 +213,47 @@ client.on('message', function (message) {
           name: client.user.username,
           icon_url: client.user.avatarURL
         },
-        title: "Commandes pour le bot musique",
+        title: "Commandes pour le bot musique.",
 
-        description: "Voici les commandes pour le bot",
+        description: "Voici les commandes pour le bot :",
         fields: [{
           name: prefix + "play (URL/Nom de vidéo/Playlist)",
-          value: "lance une musique et rejoins le channel vocal"
+          value: "Lance une musique et rejoins le channel vocal."
         },
         {
           name: prefix + "pause",
-          value: "mets en pause la musique actuelle (nécessite le role Dj)"
+          value: "Mets en pause la musique actuelle (nécessite le role Dj)."
         },
         {
           name: prefix + "resume",
-          value: "remets en route la musique actuelle (nécessite le role Dj)"
+          value: "Remets en route la musique actuelle (nécessite le role Dj)."
         },
         {
           name: prefix + "queue",
-          value: "affiche la liste des musiques"
+          value: "Affiche la liste des musiques."
         },
         {
           name: prefix + "song",
-          value: "affiche la musique actuelle"
+          value: "Affiche la musique actuelle."
         },
         {
           name: prefix + "skip",
-          value: "lance un vote pour passer à la musique suivante"
+          value: "Lance un vote pour passer à la musique suivante."
         },
 
         {
           name: prefix + "fskip",
-          value: "force le passage à la musique suivante (nécessite le role Dj)"
+          value: "Force le passage à la musique suivante (nécessite le role Dj)."
         },
 
         {
           name: prefix + "help",
-          value: "affiche cette liste"
+          value: "Affiche cette liste."
         },
 
         {
           name: prefix + "kill",
-          value: "déconnecte le bot du channel vocal"
+          value: "Déconnecte le bot du channel vocal."
         },
       ],
       timestamp: new Date(),
@@ -270,7 +270,7 @@ client.on('message', function (message) {
 
 
 client.on('ready', function () {
-  client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+  client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
   console.log('Bot prêt !');
 });
 
@@ -298,7 +298,7 @@ function playMusic(id, message) {
         queue.shift();
         queueNames.shift();
         if (queue.length === 0) {
-          client.user.setActivity("Entrez " + prefix + "help pour l'aide");
+          client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
           dispatcher.destroy();
           queue = [];
@@ -310,7 +310,7 @@ function playMusic(id, message) {
           skippers = [];
         } else {
           playMusic(queue[0], message);
-          message.channel.send(" la musique actuelle est : *" + queueNames[0] + "*");
+          message.channel.send(" passage à la musique : **" + queueNames[0] + "**.");
         }
       });
     });
