@@ -5,6 +5,7 @@ const request = require("request");
 const fs = require("fs");
 const getYoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+
 const youtube = require("./youtube.js");
 
 const yt_api_key = process.env.yt_api_key;
@@ -64,7 +65,7 @@ client.on('message', function (message) {
                 date.setSeconds(data.snippet.duration); // specify value for SECONDS here
                 var result = date.toISOString().substr(11, 8);
 
-		message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
+                message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
               });
             } else {
               message.reply("La requête n'a rien donné");
@@ -105,7 +106,7 @@ client.on('message', function (message) {
                 date.setSeconds(data.snippet.duration); // specify value for SECONDS here
                 var result = date.toISOString().substr(11, 8);
 
-		message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
+                message.reply(" playlist **" + data.snippet.title + "** (" + result + ") ajouté à la liste.");
               });
             } else {
               message.reply("La requête n'a rien donné");
@@ -143,9 +144,12 @@ client.on('message', function (message) {
     ret += "```"
     message.reply(ret);
   } else if (mess.startsWith(prefix + "song")) {
-    message.reply(" the current song is: *" + (queueNames[0] || backQueue[currentBackQueue]) + "*")
-  } else if (mess.startsWith(prefix + "kill")) {
+    if(isPlaying)  message.reply(" la musique actuelle est : *" + (queueNames[0] || backQueue[currentBackQueue]) + "*");
+    else  message.reply(" aucune musique en cours.");
+  } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
+    if(voiceChannel != null)
     voiceChannel.leave();
+
     queue = [];
     queueNames = [];
     isPlaying = false;
@@ -155,6 +159,7 @@ client.on('message', function (message) {
     skippers = [];
     currentBackQueue = 0;
     message.channel.send("Bye !");
+
   } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller)) {
     try {
       dispatcher.pause();
@@ -181,7 +186,7 @@ client.on('message', function (message) {
     "kill : déconnecte le bot du channel vocal\n" +
     "```"
   );
-  }
+}
 
 });
 
@@ -221,7 +226,7 @@ function playMusic(id, message) {
       });
     });
   } else {
-    message.reply("Please be in a voiceChannel or have the bot already in a voiceChannel");
+    message.reply(" vous, ou le bot, devez être présent dans un channel audio pour pouvoir faire ça !");
   }
 }
 
