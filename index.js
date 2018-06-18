@@ -144,7 +144,7 @@ client.on('message', function (message) {
       ret += (i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "") + "\n";
     }
     ret += "```"
-    message.reply(emb);
+    message.reply({emb});
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
