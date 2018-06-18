@@ -149,7 +149,7 @@ client.on('message', function (message) {
       else message.reply("Aucune musique dans la playlist");
 
     } else if (mess.startsWith(prefix + "song")) {
-      if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
+      if(isPlaying || queueNames[0] == "undefined")  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
       else  message.reply(" aucune musique en cours.");
     } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
       if(voiceChannel != null){
@@ -260,8 +260,9 @@ function playMusic(id, message) {
       });
       skipReq = 0;
       skippers = [];
-
+      if(queueNames[0] != "undefined")
       client.user.setActivity(queueNames[0]);
+      else client.user.setActivity("Entrez " + prefix + "help pour l'aide");
 
       dispatcher = connection.playStream(stream);
       dispatcher.on('end', function() {
