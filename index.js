@@ -142,7 +142,7 @@ client.on('message', function (message) {
     }}
     var ret = "```";
     for (var i = 0; i < queueNames.length; i++) {
-      emb.embed.fields += {name:"(i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "")"};
+      emb.embed.fields += {name:(i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "")};
       ret += (i + 1) + ": " + queueNames[i] + (i === 0 ? " **(Musique actuelle)**" : "") + "\n";
     }
     ret += "```"
