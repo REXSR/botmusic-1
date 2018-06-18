@@ -142,7 +142,8 @@ client.on('message', function (message) {
       if(i === 0) emb += "__**" + ((i + 1) + ":**__ `" + queueNames[i],"**(Musique actuelle)**`\n");
       else emb += "__**" + ((i + 1) + ":**__ `" + queueNames[i] + "`\n");
     }
-    message.channel.send(emb);
+    if(emb != "") message.reply(emb);
+    else message.reply("Aucune musique dans la playlist");
   } else if (mess.startsWith(prefix + "song")) {
     if(isPlaying)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");
     else  message.reply(" aucune musique en cours.");
