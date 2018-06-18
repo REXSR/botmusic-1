@@ -33,7 +33,7 @@ client.on('message', function (message) {
   if(message.channel.id === channel_id){
     if (mess.startsWith(prefix + 'play')) {
       if (member.voiceChannel || voiceChannel != null) {
-        if (queue[0].length > 0 || isPlaying) {
+        if (queue.length > 0 || isPlaying) {
           if (args.toLowerCase().indexOf("list=") === -1) {
             youtube.getID(args, function(id) {
               if (id != -1){
@@ -149,7 +149,7 @@ client.on('message', function (message) {
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
             dispatcher.destroy();
-          queue = new Array();
+          queue = new Array(new Array(),new Array());
           isPlaying = false;
           dispatcher = null;
           voiceChannel = null;
@@ -165,7 +165,7 @@ client.on('message', function (message) {
     } else if (mess.startsWith(prefix + "queue")) {
       var emb = "\n";
 
-      for (var i = 0; i < queue[1].length; i++) {
+      for (var i = 0; i < queue.length; i++) {
         if(i === 0) emb += ("__**" + (i + 1) + ":**__ `" + queue[1][i] + "**(Musique actuelle)**`\n\n");
         else emb += ("__**" + (i + 1) + ":**__ `" + queue[1][i] + "`\n\n");
       }
@@ -293,10 +293,11 @@ function playMusic(id, message) {
       dispatcher.on('end', function() {
         skipReq = 0;
         skippers = [];
+        console.log(queue);
         queue[0].shift();
         queue[1].shift();
         console.log(queue);
-        if (queue[0].length == 0) {
+        if (queue.length == 0) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
