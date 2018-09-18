@@ -141,7 +141,7 @@ client.on('message', function (message) {
     } else {
       message.reply(" la playlist est vide.");
     }
-  } else if (mess.startsWith(prefix + "list")) {
+  } else if (mess.startsWith(prefix + "queue")) {
       var emb = "\n";
 
       for (var i = 0; i < queueNames.length; i++) {
@@ -253,7 +253,8 @@ client.on('message', function (message) {
       queueNames = [];
       queue[0] = queuetmp;
       queueNames[0] = queueNamestmp;
-  } else message.reply(" vous devez avoir aumoins deux musiques dans la playlist.");
+      message.reply(" :ok_hand:");
+  } else message.reply(" vous devez avoir au moins deux musiques dans la playlist.");
 }
 
 }});
