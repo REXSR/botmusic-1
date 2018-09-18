@@ -123,6 +123,7 @@ client.on('message', function (message) {
           skip_song();
           if(queueNames[0] == null){
             client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
+            message.channel.send("Fin de la playlist.");
             if(dispatcher != null)
               dispatcher.destroy();
             queue = [];
@@ -166,7 +167,7 @@ client.on('message', function (message) {
     } else {
       message.reply(" la playlist est vide.");
     }
-    } else if (mess.startsWith(prefix + "queue")) {
+  } else if (mess.startsWith(prefix + "list")) {
       var emb = "\n";
 
       for (var i = 0; i < queueNames.length; i++) {
@@ -268,6 +269,8 @@ client.on('message', function (message) {
       }
     }
   });
+} else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller) && queueNames[0] != null) {
+
 }
 
 }});
@@ -325,21 +328,22 @@ function playMusic(id, message) {
   }
 }
 
-function shuffle(array) {
-  var currentIndex = array.length,
-  temporaryValue, randomIndex;
+function shuffle(array1,array2) {
+  var currentIndex = array.length;
+  var randomIndex, temporaryValue1, temporaryValue2;
 
-  while (1 !== currentIndex) {
+  while (currentIndex) {
 
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
 
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    temporaryValue1 = array1[currentIndex];
+    temporaryValue2 = array2[currentIndex];
+    array1[currentIndex] = array1[randomIndex];
+    array2[currentIndex] = array2[randomIndex];
+    array1[randomIndex] = temporaryValue1;
+    array2[randomIndex] = temporaryValue2;
   }
-
-  return array;
 }
 
 function add_to_queue(strID) {
