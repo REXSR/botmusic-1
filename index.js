@@ -248,7 +248,7 @@ client.on('message', function (message) {
   queueNamestmp = queueNames.shift();
 
   shuffle(queue,queueNames)
-  
+
   queuetmp.concat(queue);
   queueNamestmp.concat(queueNames);
 
@@ -323,7 +323,7 @@ function playMusic(id, message) {
 }
 
 function shuffle(array1,array2) {
-  var currentIndex = array.length;
+  var currentIndex = array1.length;
   var randomIndex, temporaryValue1, temporaryValue2;
 
   while (currentIndex) {
