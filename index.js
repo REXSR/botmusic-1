@@ -244,6 +244,16 @@ client.on('message', function (message) {
     }
   });
 } else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller) && queueNames[2] != null) {
+  queuetmp = queue.shift();
+  queueNamestmp = queueNames.shift();
+
+  shuffle(queue,queueNames)
+  
+  queuetmp.concat(queue);
+  queueNamestmp.concat(queueNames);
+
+  queue = queuetmp;
+  queueNames = queueNamestmp;
 
 } else if (mess.startsWith(prefix + "clear")){
   if(queueNames[0] != null && queueNames[1] != null){
