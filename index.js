@@ -244,16 +244,30 @@ client.on('message', function (message) {
     }
   });
 } else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller) && queueNames[2] != null) {
-  queuetmp = queue.shift();
-  queueNamestmp = queueNames.shift();
+  queuetmp[0] = queue.shift();
+  queueNamestmp[0] = queueNames.shift();
+
+  console.log("first element " + queuetmp);
+  console.log(" list " + queue);
+
+  console.log("first element " + queueNamestmp);
+  console.log(" list " + queueNames);
 
   shuffle(queue,queueNames)
 
-  queuetmp.concat(queue);
-  queueNamestmp.concat(queueNames);
+  queuetmp[0] += queue;
+  queueNamestmp[0] += queueNames;
 
   queue = queuetmp;
   queueNames = queueNamestmp;
+
+  console.log("first element " + queuetmp);
+  console.log(" list " + queue);
+
+  console.log("first element " + queueNamestmp);
+  console.log(" list " + queueNames);
+
+  message.reply(" :ok_hand:");
 
 } else if (mess.startsWith(prefix + "clear")){
   if(queueNames[0] != null && queueNames[1] != null){
