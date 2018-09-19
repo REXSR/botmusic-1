@@ -146,14 +146,34 @@ client.on('message', function (message) {
     }
   } else if (mess.startsWith(prefix + "queue")) {
       var emb = "\n";
+      if(queueNames[0] != null){
+        if(queueNames.length < 10){
+          for (var i = 0; i < queueNames.length; i++) {
+            if(i === 0) emb += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + " **(Musique actuelle)**`\n\n");
+            else emb += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n\n");
+          }
+          message.reply(emb);
+        } else {
+          emb = [];
+          i = 0;
+          while(i != queueNames.length ){
+            if(parseInt(i/10,10).isInteger()){
+              emb[parseInt(i/10,10)] = "\n";
+            }
+            if(i === 0){
+              emb[parseInt(i/10,10)] += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + " **(Musique actuelle)**`\n\n");
+            } else {
+              emb[j] += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n\n");
+            }
+          }
 
-      for (var i = 0; i < queueNames.length; i++) {
-        if(i === 0) emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "**(Musique actuelle)**`\n\n");
-        else emb += ("__**" + (i + 1) + ":**__ `" + queueNames[i] + "`\n\n");
-      }
+          for(i = 0; i < emb.length; i++){
+            if(i === 0) message.reply(emb[i]);
+            else message.channel.send(emb[i])
+          }
 
-      if(queueNames[0] != null) message.reply(emb);
-      else message.reply("Aucune musique dans la playlist");
+        }
+      } else message.reply("Aucune musique dans la playlist");
 
     } else if (mess.startsWith(prefix + "song")) {
       if(isPlaying && queueNames[0] != null)  message.reply(" la musique actuelle est : *" + queueNames[0] + "*");

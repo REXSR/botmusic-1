@@ -13,7 +13,7 @@
     "ffmpeg-binaries": "^3.2.2-3",
     "fs": "0.0.1-security",
     "get-youtube-id": "^1.0.0",
-    "opusscript": "0.0.6",
+    "node-opus": "^0.3.0",
     "request": "^2.87.0",
     "youtube-info": "^1.2.0",
     "ytdl-core": "^0.20.4"
