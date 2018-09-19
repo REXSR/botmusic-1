@@ -274,7 +274,7 @@ client.on('message', function (message) {
     queueNames = queueNamestmp;
 
     message.reply(" :ok_hand:");
-  } else message.reply(" vous devez avoir au moins deux musiques dans la playlist.");
+  } else message.reply(" vous devez avoir au moins trois musiques dans la playlist.");
 
 } else if (mess.startsWith(prefix + "clear") && member.roles.has(bot_controller)){
   if(queueNames.length < 1){
@@ -285,7 +285,7 @@ client.on('message', function (message) {
       queue[0] = queuetmp;
       queueNames[0] = queueNamestmp;
       message.reply(" :ok_hand:");
-  } else message.reply(" vous devez avoir au moins une musique dans la playlist.");
+  } else message.reply(" vous devez avoir au moins deux musiques dans la playlist.");
 }
 
 }});
