@@ -8,11 +8,13 @@ const fetchVideoInfo = require("youtube-info");
 
 const youtube = require("./youtube.js");
 
-const yt_api_key = process.env.yt_api_key;
-const bot_controller = process.env.bot_controller;
-const prefix = process.env.prefix;
-const discord_token = process.env.discord_token;
-const channel_id = process.env.channel_id;
+var config = require('./config.json');
+
+const yt_api_key = config.yt_api_key;
+const bot_controller = config.bot_controller;
+const prefix = config.prefix;
+const discord_token = config.discord_token;
+const channel_id = config.channel_id;
 
 var queue = [];
 var queueNames = [];
