@@ -21,6 +21,7 @@ var dispatcher = null;
 var voiceChannel = null;
 var skipReq = 0;
 var skippers = [];
+var connected = 0;
 
 console.log("Connexion à l'API youtube")
 youtube.setApiKey(yt_api_key);
@@ -133,7 +134,7 @@ client.on('message', function (message) {
     } else if (mess.startsWith(prefix + 'fskip') && member.roles.has(bot_controller)) {
       if(queueNames[0] != null){
       try {
-        message.reply(" passage à la musique suivante !");
+        if(connected) message.reply(" passage à la musique suivante !");
         skip_song();
       } catch (err) {
         console.log(err);
@@ -158,6 +159,7 @@ client.on('message', function (message) {
     } else if (mess.startsWith(prefix + "kill") && member.roles.has(bot_controller)) {
       if(voiceChannel != null){
         voiceChannel.leave();
+        connected = 0;
         client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
         message.channel.send("Bye !");
         if(dispatcher != null)
@@ -299,6 +301,7 @@ function skip_song() {
 function playMusic(id, message) {
   voiceChannel = message.member.voiceChannel || voiceChannel;
   if (voiceChannel != null) {
+    connected = 1;
     voiceChannel.join()
     .then(function(connection) {
       stream = ytdl("https://www.youtube.com/watch?v=" + id, {
@@ -317,7 +320,7 @@ function playMusic(id, message) {
         queueNames.shift();
         if (queue.length === 0) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
-          message.channel.send("Fin de la playlist.");
+          if(connected) message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
             dispatcher.destroy();
           queue = [];
@@ -329,7 +332,7 @@ function playMusic(id, message) {
           skippers = [];
         } else {
           playMusic(queue[0], message);
-          message.channel.send(" passage à la musique : **" + queueNames[0] + "**.");
+          if(connected) message.channel.send("Passage à la musique : **" + queueNames[0] + "**.");
         }
       });
     });
