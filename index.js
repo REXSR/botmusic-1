@@ -257,7 +257,7 @@ client.on('message', function (message) {
     }
   });
 } else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller)) {
-  if(queueNames.length < 2){
+  if(queueNames.length > 2){
     queuetmp = []
     queueNamestmp = [];
     queuetmp[0] = queue.shift();
@@ -277,7 +277,7 @@ client.on('message', function (message) {
   } else message.reply(" vous devez avoir au moins trois musiques dans la playlist.");
 
 } else if (mess.startsWith(prefix + "clear") && member.roles.has(bot_controller)){
-  if(queueNames.length < 1){
+  if(queueNames.length > 1){
       queuetmp = queue[0];
       queueNamestmp = queueNames[0];
       queue = [];
