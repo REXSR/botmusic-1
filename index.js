@@ -227,6 +227,16 @@ client.on('message', function (message) {
         },
 
         {
+          name: prefix + "shuffle",
+          value: "Mélange les musiques dans la playlist."
+        },
+
+        {
+          name: prefix + "clear",
+          value: "Vide la playlist."
+        },
+
+        {
           name: prefix + "help",
           value: "Affiche cette liste."
         },
