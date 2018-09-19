@@ -257,8 +257,10 @@ client.on('message', function (message) {
 
   shuffle(queue,queueNames)
 
-  queuetmp[0] += queue;
-  queueNamestmp[0] += queueNames;
+  for(i = 1; i < queue.length; i++){
+    queuetmp[i] = queue[i-1];
+    queueNamestmp[i] = queueNames[i-1];
+  }
 
   queue = queuetmp;
   queueNames = queueNamestmp;
