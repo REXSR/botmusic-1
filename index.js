@@ -5,6 +5,7 @@ const request = require("request");
 const fs = require("fs");
 const getYoutubeID = require("get-youtube-id");
 const fetchVideoInfo = require("youtube-info");
+const Timer = require('easytimer.js')
 
 const youtube = require("./youtube.js");
 
@@ -24,6 +25,8 @@ var voiceChannel = null;
 var skipReq = 0;
 var skippers = [];
 var connected = 0;
+var members = [];
+var timer = null;
 
 console.log("Connexion à l'API youtube")
 youtube.setApiKey(yt_api_key);
@@ -138,20 +141,20 @@ client.on('message', function (message) {
   message.reply(" la playlist est vide.");
 }
 } else if (mess.startsWith(prefix + 'fskip') && member.roles.has(bot_controller)) {
-    if(queueNames[0] != null){
-      try {
-        if(Number.isInteger(parseInt(args)) && parseInt(args) != 1){
-          if(connected) message.reply(" suppression de la musique " + parseInt(args) + " : " + queueNames[parseInt(args)-1]);
-          queueNames.splice(parseInt(args)-1,1);
-          queue.splice(parseInt(args)-1,1);
-        } else {
+  if(queueNames[0] != null){
+    try {
+      if(Number.isInteger(parseInt(args)) && parseInt(args) != 1){
+        if(connected) message.reply(" suppression de la musique " + parseInt(args) + " : " + queueNames[parseInt(args)-1]);
+        queueNames.splice(parseInt(args)-1,1);
+        queue.splice(parseInt(args)-1,1);
+      } else {
         if(connected) message.reply(" passage à la musique suivante !");
         skip_song();
       }
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
     message.reply(" la playlist est vide.");
   }
 } else if (mess.startsWith(prefix + "queue")) {
@@ -207,6 +210,10 @@ client.on('message', function (message) {
     skippers = [];
     client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
     message.channel.send("Bye !");
+    if(timer != null){
+      timer.stop();
+      timer = null;
+    }
 
   }
 } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller) && isPlaying) {
@@ -263,6 +270,11 @@ client.on('message', function (message) {
     {
       name: prefix + "fskip",
       value: "Force le passage à la musique suivante (nécessite le role Dj)."
+    },
+
+    {
+      name: prefix + "fskip + N°",
+      value: "Retire la musique demandée de la playlist (nécessite le role Dj)."
     },
 
     {
@@ -326,9 +338,50 @@ client.on('message', function (message) {
 
 }});
 
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+  if(voiceChannel != null){
+    let newUserChannel = newMember.voiceChannel
+    let oldUserChannel = oldMember.voiceChannel
+
+    if(oldUserChannel === undefined && newUserChannel !== undefined) {
+      // User Joins a voice channel
+      members = voiceChannel.members;
+      if(timer != null){
+        timer.stop()
+        timer = null;
+        console.log("timer stopped");
+      }
+
+    } else if(newUserChannel === undefined){
+      // User leaves a voice channel
+      members = voiceChannel.members;
+      if(members.size == 1){
+        timer = new Timer();
+        timer.start({countdown: true, startValues: {seconds: 30}});
+        timer.addEventListener('targetAchieved', function (e) {
+          if(voiceChannel != null){
+            voiceChannel.leave();
+            connected = 0;
+            if(dispatcher != null)
+            dispatcher.destroy();
+            queue = [];
+            queueNames = [];
+            isPlaying = false;
+            dispatcher = null;
+            voiceChannel = null;
+            skipReq = 0;
+            skippers = [];
+            client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
+          }
+        });
+      }
+    }
+  }
+})
 
 
 client.on('ready', function () {
+  if(client.user)
   client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
   console.log('Bot prêt !');
 });
