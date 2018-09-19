@@ -144,9 +144,13 @@ client.on('message', function (message) {
   if(queueNames[0] != null){
     try {
       if(Number.isInteger(parseInt(args)) && parseInt(args) != 1){
-        if(connected) message.reply(" suppression de la musique " + parseInt(args) + " : " + queueNames[parseInt(args)-1]);
-        queueNames.splice(parseInt(args)-1,1);
-        queue.splice(parseInt(args)-1,1);
+        if(args > 1 && args < queueNames.length){
+          if(connected) message.reply(" suppression de la musique " + parseInt(args) + " : " + queueNames[parseInt(args)-1]);
+          queueNames.splice(parseInt(args)-1,1);
+          queue.splice(parseInt(args)-1,1);
+        } else {
+          message.reply(" cette musique n'est pas présente dans la playlist.");
+        }
       } else {
         if(connected) message.reply(" passage à la musique suivante !");
         skip_song();
@@ -160,27 +164,27 @@ client.on('message', function (message) {
 } else if (mess.startsWith(prefix + "queue")) {
   var emb = "\n";
   if(queueNames[0] != null){
-      emb = [];
-      emb[0] = ("\n__**1:**__  `" + queueNames[0] + " **(Musique actuelle)**`\n");
-      i = 1;
-      var embtmp = emb[0];
-      var embNum = parseInt(i/10,10);
-      while(i != queueNames.length ){
-        if(Number.isInteger(i/10)){
-          emb[parseInt(i/10,10)] = "\n";
-          embNum = parseInt(i/10,10);
-          embtmp = "";
-        }
-        emb[embNum] = embtmp.concat("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n");
-
-        embtmp = emb[embNum];
-
-        i++;
+    emb = [];
+    emb[0] = ("\n__**1:**__  `" + queueNames[0] + " **(Musique actuelle)**`\n");
+    i = 1;
+    var embtmp = emb[0];
+    var embNum = parseInt(i/10,10);
+    while(i != queueNames.length ){
+      if(Number.isInteger(i/10)){
+        emb[parseInt(i/10,10)] = "\n";
+        embNum = parseInt(i/10,10);
+        embtmp = "";
       }
+      emb[embNum] = embtmp.concat("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n");
 
-      for(i = 0; i < emb.length; i++){
-        message.channel.send(emb[i])
-      }
+      embtmp = emb[embNum];
+
+      i++;
+    }
+
+    for(i = 0; i < emb.length; i++){
+      message.channel.send(emb[i])
+    }
 
 
   } else message.reply("Aucune musique dans la playlist");
@@ -367,6 +371,38 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
           }
         });
       }
+    } if(oldUserChannel && newUserChannel && oldUserChannel.id != newUserChannel.id) {
+      if(newMember.id == client.user.id && newUserChannel != voiceChannel){
+        voiceChannel = newUserChannel;
+      }
+      members = voiceChannel.members;
+
+      if(members.size == 1){
+        timer = new Timer();
+        timer.start({countdown: true, startValues: {seconds: 5}});
+        timer.addEventListener('targetAchieved', function (e) {
+          if(voiceChannel != null){
+            voiceChannel.leave();
+            connected = 0;
+            if(dispatcher != null)
+            dispatcher.destroy();
+            queue = [];
+            queueNames = [];
+            isPlaying = false;
+            dispatcher = null;
+            voiceChannel = null;
+            skipReq = 0;
+            skippers = [];
+            client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
+          }
+        });
+      } else {
+        members = voiceChannel.members;
+        if(timer != null){
+          timer.stop()
+          timer = null;
+        }
+      }
     }
   }
 })
@@ -406,7 +442,7 @@ function playMusic(id, message) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           if(connected) message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
-            dispatcher.destroy();
+          dispatcher.destroy();
           queue = [];
           queueNames = [];
           isPlaying = false;
