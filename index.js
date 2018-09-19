@@ -160,8 +160,6 @@ client.on('message', function (message) {
       if(voiceChannel != null){
         voiceChannel.leave();
         connected = 0;
-        client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
-        message.channel.send("Bye !");
         if(dispatcher != null)
           dispatcher.destroy();
         queue = [];
@@ -171,6 +169,9 @@ client.on('message', function (message) {
         voiceChannel = null;
         skipReq = 0;
         skippers = [];
+        client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
+        message.channel.send("Bye !");
+
       }
     } else if (mess.startsWith(prefix + 'pause') && member.roles.has(bot_controller) && isPlaying) {
       try {
