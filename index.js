@@ -160,13 +160,6 @@ client.on('message', function (message) {
 } else if (mess.startsWith(prefix + "queue")) {
   var emb = "\n";
   if(queueNames[0] != null){
-    if(queueNames.length < 10){
-      for (var i = 0; i < queueNames.length; i++) {
-        if(i === 0) emb += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + " **(Musique actuelle)**`\n");
-        else emb += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n\n");
-      }
-      message.reply(emb);
-    } else {
       emb = [];
       emb[0] = ("\n__**1:**__  `" + queueNames[0] + " **(Musique actuelle)**`\n");
       i = 1;
@@ -189,7 +182,7 @@ client.on('message', function (message) {
         message.channel.send(emb[i])
       }
 
-    }
+
   } else message.reply("Aucune musique dans la playlist");
 
 } else if (mess.startsWith(prefix + "song")) {
