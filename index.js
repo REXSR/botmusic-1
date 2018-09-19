@@ -231,12 +231,12 @@ client.on('message', function (message) {
 
         {
           name: prefix + "shuffle",
-          value: "Mélange les musiques dans la playlist."
+          value: "Mélange les musiques dans la playlist (nécessite le role Dj)."
         },
 
         {
           name: prefix + "clear",
-          value: "Vide la playlist."
+          value: "Vide la playlist (nécessite le role Dj)."
         },
 
         {
@@ -274,7 +274,7 @@ client.on('message', function (message) {
 
   message.reply(" :ok_hand:");
 
-} else if (mess.startsWith(prefix + "clear")){
+} else if (mess.startsWith(prefix + "clear") && member.roles.has(bot_controller)){
   if(queueNames[0] != null && queueNames[1] != null){
       queuetmp = queue[0];
       queueNamestmp = queueNames[0];
