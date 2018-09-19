@@ -256,26 +256,28 @@ client.on('message', function (message) {
       }
     }
   });
-} else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller) && queueNames[2] != null) {
-  queuetmp = []
-  queueNamestmp = [];
-  queuetmp[0] = queue.shift();
-  queueNamestmp[0] = queueNames.shift();
+} else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller)) {
+  if(queueNames[0] != null || queueNames[1] != null || queueNames[2] != null){
+    queuetmp = []
+    queueNamestmp = [];
+    queuetmp[0] = queue.shift();
+    queueNamestmp[0] = queueNames.shift();
 
-  shuffle(queue,queueNames)
+    shuffle(queue,queueNames)
 
-  for(i = 1; i < queue.length + 1; i++){
-    queuetmp[i] = queue[i-1];
-    queueNamestmp[i] = queueNames[i-1];
-  }
+    for(i = 1; i < queue.length + 1; i++){
+      queuetmp[i] = queue[i-1];
+      queueNamestmp[i] = queueNames[i-1];
+    }
 
-  queue = queuetmp;
-  queueNames = queueNamestmp;
+    queue = queuetmp;
+    queueNames = queueNamestmp;
 
-  message.reply(" :ok_hand:");
+    message.reply(" :ok_hand:");
+  } else message.reply(" vous devez avoir au moins deux musiques dans la playlist.");
 
 } else if (mess.startsWith(prefix + "clear") && member.roles.has(bot_controller)){
-  if(queueNames[0] != null && queueNames[1] != null){
+  if(queueNames[0] != null){
       queuetmp = queue[0];
       queueNamestmp = queueNames[0];
       queue = [];
@@ -283,7 +285,7 @@ client.on('message', function (message) {
       queue[0] = queuetmp;
       queueNames[0] = queueNamestmp;
       message.reply(" :ok_hand:");
-  } else message.reply(" vous devez avoir au moins deux musiques dans la playlist.");
+  } else message.reply(" vous devez avoir au moins une musique dans la playlist.");
 }
 
 }});
