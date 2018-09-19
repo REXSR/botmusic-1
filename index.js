@@ -17,6 +17,8 @@ const prefix = config.prefix;
 const discord_token = config.discord_token;
 const channel_id = config.channel_id;
 
+const streamOptions = { volume: 0.05};
+
 var queue = [];
 var queueNames = [];
 var isPlaying = false;
@@ -432,7 +434,7 @@ function playMusic(id, message) {
 
       client.user.setActivity(queueNames[0]);
 
-      dispatcher = connection.playStream(stream);
+      dispatcher = connection.playStream(stream, streamOptions);
       dispatcher.on('end', function() {
         skipReq = 0;
         skippers = [];
