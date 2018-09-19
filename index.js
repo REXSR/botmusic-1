@@ -249,27 +249,15 @@ client.on('message', function (message) {
   queuetmp[0] = queue.shift();
   queueNamestmp[0] = queueNames.shift();
 
-  console.log("first element " + queuetmp);
-  console.log(" list " + queue);
-
-  console.log("first element " + queueNamestmp);
-  console.log(" list " + queueNames);
-
   shuffle(queue,queueNames)
 
-  for(i = 1; i < queue.length; i++){
+  for(i = 1; i < queue.length + 1; i++){
     queuetmp[i] = queue[i-1];
     queueNamestmp[i] = queueNames[i-1];
   }
 
   queue = queuetmp;
   queueNames = queueNamestmp;
-
-  console.log("first element " + queuetmp);
-  console.log(" list " + queue);
-
-  console.log("first element " + queueNamestmp);
-  console.log(" list " + queueNames);
 
   message.reply(" :ok_hand:");
 
