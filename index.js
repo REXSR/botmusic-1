@@ -157,7 +157,7 @@ client.on('message', function (message) {
           emb = [];
           i = 0;
           while(i != queueNames.length ){
-            if(parseInt(i/10,10).isInteger()){
+            if(Number.isInteger(parseInt(i/10,10))){
               emb[parseInt(i/10,10)] = "\n";
             }
             if(i === 0){
@@ -165,6 +165,8 @@ client.on('message', function (message) {
             } else {
               emb[j] += ("__**" + (i + 1) + ":**__  `" + queueNames[i] + "`\n\n");
             }
+
+            i++;
           }
 
           for(i = 0; i < emb.length; i++){
