@@ -244,7 +244,8 @@ client.on('message', function (message) {
     }
   });
 } else if (mess.startsWith(prefix + "shuffle") && member.roles.has(bot_controller) && queueNames[2] != null) {
-  queuetmp = [], queueNamestmp [];
+  queuetmp = []
+  queueNamestmp [];
   queuetmp[0] = queue.shift();
   queueNamestmp[0] = queueNames.shift();
 
