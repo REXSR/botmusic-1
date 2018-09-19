@@ -349,7 +349,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
       if(timer != null){
         timer.stop()
         timer = null;
-        console.log("timer stopped");
       }
 
     } else if(newUserChannel === undefined){
@@ -357,7 +356,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
       members = voiceChannel.members;
       if(members.size == 1){
         timer = new Timer();
-        timer.start({countdown: true, startValues: {seconds: 30}});
+        timer.start({countdown: true, startValues: {seconds: 5}});
         timer.addEventListener('targetAchieved', function (e) {
           if(voiceChannel != null){
             voiceChannel.leave();
@@ -414,12 +413,11 @@ function playMusic(id, message) {
           client.user.setActivity("Entrez " + prefix + "help pour l'aide.");
           if(connected) message.channel.send("Fin de la playlist.");
           if(dispatcher != null)
-          dispatcher.destroy();
+            dispatcher.destroy();
           queue = [];
           queueNames = [];
           isPlaying = false;
           dispatcher = null;
-          voiceChannel = null;
           skipReq = 0;
           skippers = [];
         } else {
